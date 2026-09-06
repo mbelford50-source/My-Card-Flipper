@@ -174,6 +174,43 @@
     }
     .history-item.side-right { border-left-color: #05c46b; }
   </style>
+    /* MOBILE TOUCH SCREEN OPTIMIZATIONS */
+    @media (max-width: 768px) {
+      :root {
+        /* Scales card dimensions down smoothly for mobile frames */
+        --card-w: 130px;
+        --card-h: 180px;
+      }
+      body {
+        padding: 10px;
+      }
+      .control-panel {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 10px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      button {
+        padding: 8px 16px;
+        font-size: 12px;
+        flex: 1 1 40%;
+      }
+      .side-panel {
+        min-width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+      }
+      .card-slots {
+        gap: 10px;
+      }
+      /* Adjusts fanned hover explode intervals for smaller specs */
+      .discard-pile:hover .card:nth-child(2) { margin-left: -12px; }
+      .discard-pile:hover .card:nth-child(3) { margin-left: -24px; }
+      .discard-pile:hover .card:nth-child(4) { margin-left: -36px; }
+      .discard-pile:hover .card:nth-child(5) { margin-left: -48px; }
+      .discard-pile:hover .card:nth-child(6) { margin-left: -60px; }
+    }
 </head>
 <body>
 
