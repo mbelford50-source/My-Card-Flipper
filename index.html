@@ -161,18 +161,37 @@
       min-height: 50px;
       align-items: center;
     }
-    .history-item {
-      background: #ffffff;
-      color: #2f3542;
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-weight: bold;
-      font-size: 13px;
-      white-space: nowrap;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.15);
-      border-left: 5px solid #ff4757;
+       .history-item {
+      background: #2f3542;
+      padding: 4px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      border: 3px solid #ff4757; /* Pile A border color default */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      animation: slideIn 0.25s ease-out;
     }
-    .history-item.side-right { border-left-color: #05c46b; }
+    .history-item.side-right {
+      border-color: #05c46b; /* Pile B border color variant */
+    }
+    .history-thumb {
+      width: 50px;       /* Sleek thumbnail sizing specifications */
+      height: 70px;
+      border-radius: 4px;
+      object-fit: cover;
+      display: block;
+    }
+    .history-label {
+      font-size: 10px;
+      font-weight: bold;
+      color: #ced6e0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 0 4px;
+    }
+
   
     /* MOBILE TOUCH SCREEN OPTIMIZATIONS */
     @media (max-width: 768px) {
@@ -419,7 +438,7 @@
       });
     }
 
-    function updateHistoryUI() {
+       function updateHistoryUI() {
       const historyList = document.getElementById('history-list');
       const placeholder = document.getElementById('history-placeholder');
       if (placeholder) placeholder.remove();
@@ -428,13 +447,22 @@
       
       discardHistoryLog.forEach(entry => {
         const li = document.createElement('li');
+        // entry.value contains the raw card file text data name (like '5')
         li.className = `history-item ${entry.side === 'right' ? 'side-right' : ''}`;
-        li.innerText = `Pile ${entry.side === 'left' ? 'A' : 'B'}: Card ${entry.value}`;
+        
+        // Formulates a matching responsive layout inner thumbnail framework string node
+        li.innerHTML = `
+          <img src="img/${entry.value}.png" class="history-thumb" alt="Card ${entry.value}">
+          <span class="history-label">${entry.side === 'left' ? 'A' : 'B'}-${entry.value}</span>
+        `;
+        
         historyList.appendChild(li);
       });
 
+      // Keep screen context scrolling forward to show newest entries
       historyList.scrollLeft = historyList.scrollWidth;
     }
+
 
     // ===============================================================
     // JSON IMPORT & EXPORT FEATURES
